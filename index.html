@@ -443,151 +443,70 @@
         <!-- ================= PESTAÑA 3: DESAFÍOS Y EJERCICIOS ================= -->
         <section id="tab-quiz" class="hidden space-y-6">
             
-            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 glow-box">
-                <div>
-                    <h2 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-award text-amber-400"></i>
-                        Desafíos de Aplicación Práctica
-                    </h2>
-                    <p class="text-slate-400 text-sm">Resuelve los siguientes problemas para verificar tu aprendizaje sobre la Ley de Dalton.</p>
+            <!-- Marcador y Nivel de Dominio -->
+            <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4 glow-box">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="p-2 bg-amber-500/10 text-amber-400 rounded-xl border border-amber-500/20">
+                                <i class="fa-solid fa-trophy text-lg"></i>
+                            </span>
+                            <h2 class="text-xl font-bold text-white">Desafíos Aplicados & Problemas Reales</h2>
+                        </div>
+                        <p class="text-slate-400 text-xs sm:text-sm">
+                            Aplica la Ley de Dalton en medicina, ingeniería aeroespacial, buceo técnico y termodinámica química.
+                        </p>
+                    </div>
+
+                    <div class="w-full md:w-auto bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between md:justify-end gap-5">
+                        <div>
+                            <span class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Nivel de Dominio:</span>
+                            <span id="quiz-rank-badge" class="text-sm font-bold text-amber-400 font-mono">🔰 Novato</span>
+                        </div>
+                        <div class="text-right border-l border-slate-800 pl-4">
+                            <span class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Puntuación:</span>
+                            <span id="quiz-score-pts" class="text-base font-extrabold font-mono text-indigo-300">0 / 175 pts</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-slate-800 px-4 py-2 rounded-xl border border-slate-700 flex items-center gap-3">
-                    <span class="text-xs text-slate-400 font-semibold">PUNTUACIÓN:</span>
-                    <span id="quiz-score" class="text-lg font-bold font-mono text-amber-400">0 / 5</span>
+
+                <!-- Barra de Progreso General -->
+                <div class="space-y-1.5 pt-1">
+                    <div class="flex justify-between text-xs text-slate-400 font-medium">
+                        <span>Progreso de Solución (<span id="quiz-solved-count">0 / 10</span> completados)</span>
+                        <span>Avance de Nivel</span>
+                    </div>
+                    <div class="h-2.5 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-400 h-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- Filtros Interactivos por Dificultad -->
+                <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/80 pt-4">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-1">Filtrar por Dificultad:</span>
+                    <div class="flex flex-wrap items-center gap-1.5">
+                        <button id="quiz-filter-all" onclick="filterQuiz('all')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md border border-indigo-400/30">
+                            Todos (10)
+                        </button>
+                        <button id="quiz-filter-facil" onclick="filterQuiz('facil')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-400 hover:text-white border border-slate-700 hover:bg-slate-700/50">
+                            🟢 Fácil (2)
+                        </button>
+                        <button id="quiz-filter-intermedio" onclick="filterQuiz('intermedio')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-400 hover:text-white border border-slate-700 hover:bg-slate-700/50">
+                            🟡 Intermedio (3)
+                        </button>
+                        <button id="quiz-filter-avanzado" onclick="filterQuiz('avanzado')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-400 hover:text-white border border-slate-700 hover:bg-slate-700/50">
+                            🔴 Avanzado (3)
+                        </button>
+                        <button id="quiz-filter-master" onclick="filterQuiz('master')" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-400 hover:text-white border border-slate-700 hover:bg-slate-700/50">
+                            🟣 Desafío Máster (2)
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Contenedor de Preguntas -->
+            <!-- Contenedor Dinámico de Preguntas -->
             <div class="space-y-4" id="quiz-container">
-                
-                <!-- Pregunta 1 -->
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3" id="q-card-1">
-                    <div class="flex items-start justify-between">
-                        <span class="text-xs font-bold px-2.5 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">
-                            Pregunta 1 (Cálculo directo)
-                        </span>
-                        <span id="q-status-1" class="text-xs font-mono text-slate-400">Pendiente</span>
-                    </div>
-                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
-                        Un recipiente de laboratorio contiene una mezcla gaseosa donde 
-                        <span class="font-semibold text-blue-400">P<sub>N<sub>2</sub></sub> = 0.78 atm</span>, 
-                        <span class="font-semibold text-red-400">P<sub>O<sub>2</sub></sub> = 0.21 atm</span> y 
-                        <span class="font-semibold text-emerald-400">P<sub>Ar</sub> = 0.01 atm</span>. 
-                        ¿Cuál es la presión total (<span class="font-semibold text-indigo-300">P<sub>total</sub></span>) dentro del recipiente?
-                    </p>
-                    <div class="flex flex-wrap items-center gap-3 pt-1">
-                        <input type="number" id="q-input-1" step="0.01" placeholder="Ej: 1.00" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono w-32">
-                        <span class="text-sm text-slate-400 font-medium">atm</span>
-                        <button onclick="checkQuestion(1, 1.00)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all">
-                            Comprobar
-                        </button>
-                    </div>
-                    <div id="q-feedback-1" class="hidden text-xs p-3 rounded-xl border mt-2"></div>
-                </div>
-
-                <!-- Pregunta 2 -->
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3" id="q-card-2">
-                    <div class="flex items-start justify-between">
-                        <span class="text-xs font-bold px-2.5 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">
-                            Pregunta 2 (Fracción Molar)
-                        </span>
-                        <span id="q-status-2" class="text-xs font-mono text-slate-400">Pendiente</span>
-                    </div>
-                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
-                        Si un tanque rígido contiene <b>3.0 moles</b> de N<sub>2</sub>, <b>1.0 mol</b> de O<sub>2</sub> y <b>1.0 mol</b> de Ar (Total: <b>5.0 moles</b>), ¿cuál es la <b class="text-amber-300">fracción molar (X<sub>N<sub>2</sub></sub>)</b> del Nitrógeno?
-                    </p>
-                    <div class="flex flex-wrap items-center gap-3 pt-1">
-                        <input type="number" id="q-input-2" step="0.01" placeholder="Ej: 0.60" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono w-32">
-                        <button onclick="checkQuestion(2, 0.60)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all">
-                            Comprobar
-                        </button>
-                    </div>
-                    <div id="q-feedback-2" class="hidden text-xs p-3 rounded-xl border mt-2"></div>
-                </div>
-
-                <!-- Pregunta 3 -->
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3" id="q-card-3">
-                    <div class="flex items-start justify-between">
-                        <span class="text-xs font-bold px-2.5 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">
-                            Pregunta 3 (Presión Parcial a partir de X<sub>i</sub>)
-                        </span>
-                        <span id="q-status-3" class="text-xs font-mono text-slate-400">Pendiente</span>
-                    </div>
-                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
-                        La presión total en un tanque de buceo es de <b>4.00 atm</b>. Si la fracción molar del Oxígeno es <b class="text-amber-300">X<sub>O<sub>2</sub></sub> = 0.25</b>, ¿cuál es su presión parcial (<span class="text-red-400 font-semibold">P<sub>O<sub>2</sub></sub></span>)?
-                    </p>
-                    <div class="flex flex-wrap items-center gap-3 pt-1">
-                        <input type="number" id="q-input-3" step="0.01" placeholder="Ej: 1.00" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono w-32">
-                        <span class="text-sm text-slate-400 font-medium">atm</span>
-                        <button onclick="checkQuestion(3, 1.00)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all">
-                            Comprobar
-                        </button>
-                    </div>
-                    <div id="q-feedback-3" class="hidden text-xs p-3 rounded-xl border mt-2"></div>
-                </div>
-
-                <!-- Pregunta 4 Concepto -->
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3" id="q-card-4">
-                    <div class="flex items-start justify-between">
-                        <span class="text-xs font-bold px-2.5 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">
-                            Pregunta 4 (Análisis de Compresión)
-                        </span>
-                        <span id="q-status-4" class="text-xs font-mono text-slate-400">Pendiente</span>
-                    </div>
-                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
-                        Si empujamos el pistón reduciendo el volumen del contenedor a la mitad (<b>V / 2</b>) a temperatura constante, ¿qué sucede con las presiones parciales de los gases?
-                    </p>
-                    <div class="space-y-2 pt-1 text-xs">
-                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
-                            <input type="radio" name="q4" value="A" class="text-indigo-600">
-                            <span>A) Permanecen iguales porque la cantidad de moles no cambió.</span>
-                        </label>
-                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
-                            <input type="radio" name="q4" value="B" class="text-indigo-600">
-                            <span>B) Todas las presiones parciales se duplican (2 × P<sub>i</sub>).</span>
-                        </label>
-                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
-                            <input type="radio" name="q4" value="C" class="text-indigo-600">
-                            <span>C) Solo la presión del gas con mayor masa molecular aumenta.</span>
-                        </label>
-                    </div>
-                    <button onclick="checkMCQ(4, 'B')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all mt-2">
-                        Comprobar Opción
-                    </button>
-                    <div id="q-feedback-4" class="hidden text-xs p-3 rounded-xl border mt-2"></div>
-                </div>
-
-                <!-- Pregunta 5 Concepto -->
-                <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3" id="q-card-5">
-                    <div class="flex items-start justify-between">
-                        <span class="text-xs font-bold px-2.5 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">
-                            Pregunta 5 (Principio de Aislamiento)
-                        </span>
-                        <span id="q-status-5" class="text-xs font-mono text-slate-400">Pendiente</span>
-                    </div>
-                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
-                        Si aislamos visualmente o eliminamos los gases O<sub>2</sub> y Ar, dejando únicamente el N<sub>2</sub> en el contenedor al mismo volumen y temperatura, ¿qué valor tendrá la presión ejercida por el N<sub>2</sub>?
-                    </p>
-                    <div class="space-y-2 pt-1 text-xs">
-                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
-                            <input type="radio" name="q5" value="A" class="text-indigo-600">
-                            <span>A) Cero, porque necesita los otros gases para colisionar.</span>
-                        </label>
-                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
-                            <input type="radio" name="q5" value="B" class="text-indigo-600">
-                            <span>B) El mismo valor de su presión parcial original (P<sub>N<sub>2</sub></sub>).</span>
-                        </label>
-                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
-                            <input type="radio" name="q5" value="C" class="text-indigo-600">
-                            <span>C) Igual a la presión total inicial (P<sub>total</sub>).</span>
-                        </label>
-                    </div>
-                    <button onclick="checkMCQ(5, 'B')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all mt-2">
-                        Comprobar Opción
-                    </button>
-                    <div id="q-feedback-5" class="hidden text-xs p-3 rounded-xl border mt-2"></div>
-                </div>
-
+                <!-- Se renderizan dinámicamente los 10 desafíos enriquecidos -->
             </div>
         </section>
 
@@ -966,77 +885,416 @@
             });
         }
 
-        const quizResults = { 1: false, 2: false, 3: false, 4: false, 5: false };
+        const quizResults = {};
 
-        function checkQuestion(id, expected) {
-            const input = document.getElementById(`q-input-${id}`);
-            const val = parseFloat(input.value);
-            const feedback = document.getElementById(`q-feedback-${id}`);
-            const status = document.getElementById(`q-status-${id}`);
+        const quizData = [
+            {
+                id: 1,
+                level: 'facil',
+                levelLabel: '🟢 Fácil',
+                levelClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+                pts: 10,
+                icon: 'fa-user-nurse',
+                context: 'Medicina Respiratoria',
+                title: 'Oxigenoterapia Heliox en Cuidados Intensivos',
+                questionHtml: 'Un paciente con obstrucción respiratoria grave recibe una mezcla gaseosa de <b>Heliox</b> compuesta por un <b>80% de Helio (He)</b> y un <b>20% de Oxígeno (O<sub>2</sub>)</b> en volumen. Si la mascarilla suministra la mezcla a una presión total de <b>1.05 atm</b> a nivel del mar, ¿cuál es la presión parcial del Helio (<b>P<sub>He</sub></b>)?',
+                unit: 'atm',
+                answer: 0.84,
+                tolerance: 0.02,
+                hintHtml: 'Aplica la relación de presión parcial según la fracción en volumen: <b>P<sub>He</sub> = X<sub>He</sub> × P<sub>total</sub></b>. Recuerda convertir el porcentaje a decimal (80% = 0.80).',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Identificar la fracción molar (o en volumen):</b><br>X<sub>He</sub> = 80% = 0.80</p>
+                        <p><b>Paso 2: Aplicar la Ley de Dalton:</b><br>P<sub>He</sub> = X<sub>He</sub> · P<sub>total</sub></p>
+                        <p><b>Paso 3: Sustituir los valores:</b><br>P<sub>He</sub> = 0.80 × 1.05 atm = <b>0.84 atm</b></p>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                level: 'facil',
+                levelLabel: '🟢 Fácil',
+                levelClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+                pts: 10,
+                icon: 'fa-screwdriver-wrench',
+                context: 'Metalurgia & Soldadura TIG',
+                title: 'Atmósfera Protectora de Argón-Helio',
+                questionHtml: 'En un taller aeroespacial se utiliza una antorcha de soldadura TIG con un gas inerte protector compuesto por <b>75% Argón (Ar)</b> y <b>25% Helio (He)</b>. Si el manómetro del regulador mide una presión total de <b>2.40 bar</b> en la línea de alimentación, ¿cuál es la presión parcial ejercida por el Argón (<b>P<sub>Ar</sub></b>)?',
+                unit: 'bar',
+                answer: 1.80,
+                tolerance: 0.02,
+                hintHtml: 'La presión parcial de un gas noble en la mezcla es igual a su fracción molar por la presión total: <b>P<sub>Ar</sub> = 0.75 × 2.40 bar</b>.',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Fracción molar del Argón:</b><br>X<sub>Ar</sub> = 75 / 100 = 0.75</p>
+                        <p><b>Paso 2: Cálculo de presión parcial:</b><br>P<sub>Ar</sub> = X<sub>Ar</sub> · P<sub>total</sub> = 0.75 × 2.40 bar = <b>1.80 bar</b></p>
+                    </div>
+                `
+            },
+            {
+                id: 3,
+                level: 'intermedio',
+                levelLabel: '🟡 Intermedio',
+                levelClass: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+                pts: 15,
+                icon: 'fa-water',
+                context: 'Buceo Técnico Profundo',
+                title: 'Mezcla Trimix a 50m de Profundidad',
+                questionHtml: 'Un buzo explora un barco hundido a <b>50 metros</b> de profundidad, donde la presión ambiental es de <b>6.00 atm</b>. Respira una mezcla <b>Trimix 18/45</b> (<b>18% O<sub>2</sub></b>, <b>45% He</b> y <b>37% N<sub>2</sub></b>). Para prevenir la narcosis de nitrógeno, calcula la presión parcial del Nitrógeno (<b>P<sub>N<sub>2</sub></sub></b>) a esa profundidad.',
+                unit: 'atm',
+                answer: 2.22,
+                tolerance: 0.03,
+                hintHtml: 'Identifica el porcentaje de Nitrógeno (37% → 0.37) y multiplícalo por la presión ambiental hidrostática total de 6.00 atm.',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Fracción molar de N<sub>2</sub>:</b><br>X<sub>N<sub>2</sub></sub> = 37% = 0.37</p>
+                        <p><b>Paso 2: Ley de Dalton a 6.00 atm:</b><br>P<sub>N<sub>2</sub></sub> = X<sub>N<sub>2</sub></sub> × P<sub>total</sub> = 0.37 × 6.00 atm = <b>2.22 atm</b></p>
+                        <p class="text-[11px] text-slate-400 italic">Nota fisiológica: Valores de P<sub>N<sub>2</sub></sub> superiores a 3.2 atm causan narcosis grave por nitrógeno ("efecto martini").</p>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                level: 'intermedio',
+                levelLabel: '🟡 Intermedio',
+                levelClass: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+                pts: 15,
+                icon: 'fa-mountain-sun',
+                context: 'Fisiología de Altitud',
+                title: 'Hipoxia Atmosférica en la Cima del Mt. Everest',
+                questionHtml: 'En la cumbre del Monte Everest (8,848 m), la presión barométrica cae a solo <b>0.330 atm</b>. Sabiendo que la proporción de Oxígeno en el aire seco se mantiene constante en un <b>21.0% (O<sub>2</sub>)</b>, ¿cuál es la presión parcial del Oxígeno (<b>P<sub>O<sub>2</sub></sub></b>) disponible en el aire ambiente?',
+                unit: 'atm',
+                answer: 0.0693,
+                tolerance: 0.005,
+                hintHtml: 'Multiplica la fracción molar del Oxígeno (0.21) por la presión atmosférica reducida de la cumbre (0.330 atm).',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Fracción molar del O<sub>2</sub>:</b><br>X<sub>O<sub>2</sub></sub> = 21.0% = 0.210</p>
+                        <p><b>Paso 2: Presión parcial en la cumbre:</b><br>P<sub>O<sub>2</sub></sub> = 0.210 × 0.330 atm = <b>0.0693 atm</b> (o ~52.7 mmHg)</p>
+                        <p class="text-[11px] text-slate-400 italic">A nivel del mar, P<sub>O<sub>2</sub></sub> es ~0.21 atm. ¡En el Everest es menos de un tercio!</p>
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                level: 'intermedio',
+                levelLabel: '🟡 Intermedio',
+                levelClass: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+                pts: 15,
+                icon: 'fa-plane',
+                context: 'Ingeniería Aeronáutica',
+                title: 'Presurización de Cabina en Vuelo Comercial',
+                questionHtml: 'La cabina de un avión de pasajeros en crucero se presuriza a una presión total de <b>0.750 atm</b>. Un análisis del aire revela que en la cabina hay <b>1.50 moles de O<sub>2</sub></b>, <b>5.60 moles de N<sub>2</sub></b> y <b>0.08 moles de Ar</b>. ¿Cuál es la presión parcial del Oxígeno (<b>P<sub>O<sub>2</sub></sub></b>) que respiran los pasajeros?',
+                unit: 'atm',
+                answer: 0.157,
+                tolerance: 0.008,
+                hintHtml: 'Calcula primero los moles totales (n<sub>total</sub> = 1.50 + 5.60 + 0.08), luego halla X<sub>O<sub>2</sub></sub> = 1.50 / n<sub>total</sub>, y finalmente multiplica por 0.750 atm.',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Moles totales de gas:</b><br>n<sub>total</sub> = 1.50 + 5.60 + 0.08 = 7.18 moles</p>
+                        <p><b>Paso 2: Fracción molar del O<sub>2</sub>:</b><br>X<sub>O<sub>2</sub></sub> = 1.50 / 7.18 = 0.2089</p>
+                        <p><b>Paso 3: Presión parcial de O<sub>2</sub>:</b><br>P<sub>O<sub>2</sub></sub> = 0.2089 × 0.750 atm = <b>0.1567 atm</b> (o 0.157 atm)</p>
+                    </div>
+                `
+            },
+            {
+                id: 6,
+                level: 'avanzado',
+                levelLabel: '🔴 Avanzado',
+                levelClass: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+                pts: 20,
+                icon: 'fa-vial',
+                context: 'Gasometría sobre Agua',
+                title: 'Recolección de H₂ sobre Agua y Presión de Vapor',
+                questionHtml: 'En un ensayo de corrosión ácida, se recolecta un volumen de gas Hidrógeno (H<sub>2</sub>) sobre agua a <b>25°C</b>. La presión barométrica total medida en la cubeta del laboratorio es de <b>1.013 atm</b>. Sabiendo que la presión de vapor saturado del agua a 25°C es de <b>0.0313 atm</b> (23.8 mmHg), ¿cuál es la presión parcial del gas Hidrógeno seco (<b>P<sub>H<sub>2</sub></sub></b>)?',
+                unit: 'atm',
+                answer: 0.9817,
+                tolerance: 0.01,
+                hintHtml: 'El gas recolectado es una mezcla de H<sub>2</sub> y vapor de H<sub>2</sub>O. Aplica: <b>P<sub>total</sub> = P<sub>H<sub>2</sub></sub> + P<sub>H<sub>2</sub>O</sub></b>.',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Aplicar la corrección por humedad (Ley de Dalton):</b><br>P<sub>total</sub> = P<sub>H<sub>2</sub></sub> + P<sub>H<sub>2</sub>O</sub></p>
+                        <p><b>Paso 2: Despejar la presión del gas seco H<sub>2</sub>:</b><br>P<sub>H<sub>2</sub></sub> = P<sub>total</sub> - P<sub>H<sub>2</sub>O</sub></p>
+                        <p><b>Paso 3: Sustituir valores:</b><br>P<sub>H<sub>2</sub></sub> = 1.013 atm - 0.0313 atm = <b>0.9817 atm</b> (o ~746.2 mmHg)</p>
+                    </div>
+                `
+            },
+            {
+                id: 7,
+                level: 'avanzado',
+                levelLabel: '🔴 Avanzado',
+                levelClass: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+                pts: 20,
+                icon: 'fa-shuttle-space',
+                context: 'Exploración Espacial & NASA',
+                title: 'Atmósfera Controlada del Hábitat Espacial',
+                questionHtml: 'En el módulo espacial "Aura", el sistema de soporte vital mantiene una presión interna total regulada de <b>0.725 atm</b>. Los sensores indican presiones parciales fijadas en <b>P<sub>O<sub>2</sub></sub> = 0.210 atm</b> y <b>P<sub>N<sub>2</sub></sub> = 0.500 atm</b>. El resto corresponde al CO<sub>2</sub> metabólico no filtrado. ¿Cuál es la presión parcial de CO<sub>2</sub> (<b>P<sub>CO<sub>2</sub></sub></b>) en el hábitat?',
+                unit: 'atm',
+                answer: 0.015,
+                tolerance: 0.003,
+                hintHtml: 'La suma de todas las presiones parciales debe igualar a P<sub>total</sub>: <b>P<sub>CO<sub>2</sub></sub> = P<sub>total</sub> - (P<sub>O<sub>2</sub></sub> + P<sub>N<sub>2</sub></sub>)</b>.',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Ecuación general de Dalton:</b><br>P<sub>total</sub> = P<sub>O<sub>2</sub></sub> + P<sub>N<sub>2</sub></sub> + P<sub>CO<sub>2</sub></sub></p>
+                        <p><b>Paso 2: Despejar P<sub>CO<sub>2</sub></sub>:</b><br>P<sub>CO<sub>2</sub></sub> = 0.725 atm - (0.210 atm + 0.500 atm)</p>
+                        <p><b>Paso 3: Resultado:</b><br>P<sub>CO<sub>2</sub></sub> = 0.725 - 0.710 = <b>0.015 atm</b> (o 11.4 mmHg)</p>
+                    </div>
+                `
+            },
+            {
+                id: 8,
+                level: 'avanzado',
+                levelLabel: '🔴 Avanzado',
+                levelClass: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+                pts: 20,
+                icon: 'fa-ship',
+                context: 'Atmósfera de Submarinos Nucleares',
+                title: 'Masa de Gases y Presión de CO₂ en Submarino',
+                questionHtml: 'Un compartimento estanco de submarino contiene una masa de <b>560 g de N<sub>2</sub></b> (M = 28 g/mol), <b>160 g de O<sub>2</sub></b> (M = 32 g/mol) y <b>44 g de CO<sub>2</sub></b> (M = 44 g/mol). Si el manómetro ambiental lee una presión total de <b>1.10 atm</b>, calcula la presión parcial ejercida únicamente por el CO<sub>2</sub> (<b>P<sub>CO<sub>2</sub></sub></b>).',
+                unit: 'atm',
+                answer: 0.0423,
+                tolerance: 0.003,
+                hintHtml: 'Convierte cada masa a moles (n = masa / MolarMass). Luego halla X<sub>CO<sub>2</sub></sub> = n<sub>CO<sub>2</sub></sub> / n<sub>total</sub> y multiplica por P<sub>total</sub> (1.10 atm).',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Moles de cada sustancia:</b><br>
+                        • n<sub>N<sub>2</sub></sub> = 560 / 28 = 20.0 mol<br>
+                        • n<sub>O<sub>2</sub></sub> = 160 / 32 = 5.0 mol<br>
+                        • n<sub>CO<sub>2</sub></sub> = 44 / 44 = 1.0 mol<br>
+                        <b>n<sub>total</sub> = 20.0 + 5.0 + 1.0 = 26.0 mol</b></p>
+                        <p><b>Paso 2: Fracción molar de CO<sub>2</sub>:</b><br>X<sub>CO<sub>2</sub></sub> = 1.0 / 26.0 = 0.03846</p>
+                        <p><b>Paso 3: Presión parcial:</b><br>P<sub>CO<sub>2</sub></sub> = 0.03846 × 1.10 atm = <b>0.0423 atm</b></p>
+                    </div>
+                `
+            },
+            {
+                id: 9,
+                level: 'master',
+                levelLabel: '🟣 Desafío Máster',
+                levelClass: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+                pts: 25,
+                icon: 'fa-industry',
+                context: 'Ingeniería Química Petroquímica',
+                title: 'Síntesis de Amoníaco (Haber-Bosch) en Equilibrio',
+                questionHtml: 'En un reactor industrial para la síntesis de amoníaco (<b>N<sub>2</sub> + 3 H<sub>2</sub> → 2 NH<sub>3</sub></b>), se cargan <b>100 mol de N<sub>2</sub></b> y <b>300 mol de H<sub>2</sub></b>. La reacción alcanza una conversión parcial del <b>50% del reactivo limitante</b>. Si en el equilibrio la presión total medida en el vaso reactor es de <b>200 atm</b>, calcula la presión parcial del amoníaco producido (<b>P<sub>NH<sub>3</sub></sub></b>).',
+                unit: 'atm',
+                answer: 66.67,
+                tolerance: 0.8,
+                hintHtml: 'Plantea la tabla de moles iniciales, reaccionantes (50% de 100 mol N<sub>2</sub> → reaccionan 50 mol N<sub>2</sub> y 150 mol H<sub>2</sub>) y finales. Calcula n<sub>total</sub> en equilibrio y luego X<sub>NH<sub>3</sub></sub> × 200 atm.',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Estequiometría y Moles en Equilibrio:</b><br>
+                        • N<sub>2</sub> inicial = 100 mol. Reaccionan 50 mol → Quedan <b>50 mol N<sub>2</sub></b>.<br>
+                        • H<sub>2</sub> inicial = 300 mol. Reaccionan 150 mol → Quedan <b>150 mol H<sub>2</sub></b>.<br>
+                        • NH<sub>3</sub> formado = 2 × 50 mol = <b>100 mol NH<sub>3</sub></b>.<br>
+                        <b>n<sub>total</sub> = 50 + 150 + 100 = 300 mol totales en equilibrio.</b></p>
+                        <p><b>Paso 2: Fracción molar de NH<sub>3</sub>:</b><br>X<sub>NH<sub>3</sub></sub> = 100 / 300 = 1/3 ≈ 0.3333</p>
+                        <p><b>Paso 3: Presión Parcial:</b><br>P<sub>NH<sub>3</sub></sub> = (1/3) × 200 atm = <b>66.67 atm</b></p>
+                    </div>
+                `
+            },
+            {
+                id: 10,
+                level: 'master',
+                levelLabel: '🟣 Desafío Máster',
+                levelClass: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+                pts: 25,
+                icon: 'fa-cubes-stacked',
+                context: 'Termodinámica de Interconexión',
+                title: 'Expansión e Interconexión de Tanques Rígidos',
+                questionHtml: 'Un tanque de almacenamiento <b>A (V<sub>A</sub> = 10.0 L)</b> contiene Helio (He) a una presión de <b>3.00 atm</b>. Un segundo tanque <b>B (V<sub>B</sub> = 15.0 L)</b> contiene Neón (Ne) a <b>2.00 atm</b>. Ambos tanques se encuentran a la misma temperatura constante. Se abre la válvula de conexión uniendo ambos recipientes sin variación de temperatura. ¿Cuál es la <b>presión parcial final del Helio (P<sub>He</sub>)</b> en la mezcla expandida de 25.0 L?',
+                unit: 'atm',
+                answer: 1.20,
+                tolerance: 0.02,
+                hintHtml: 'Aplica la Ley de Boyle (P<sub>1</sub>V<sub>1</sub> = P<sub>2</sub>V<sub>2</sub>) para el Helio al expandirse del volumen inicial V<sub>1</sub> = 10.0 L al volumen total combinado V<sub>2</sub> = 10.0 L + 15.0 L = 25.0 L.',
+                solutionHtml: `
+                    <div class="space-y-1.5 font-sans">
+                        <p><b>Paso 1: Determinar el volumen total del sistema combinado:</b><br>V<sub>total</sub> = V<sub>A</sub> + V<sub>B</sub> = 10.0 L + 15.0 L = 25.0 L</p>
+                        <p><b>Paso 2: Ley de Boyle para la expansión isotérmica del Helio:</b><br>P<sub>He, inicial</sub> × V<sub>A</sub> = P<sub>He, final</sub> × V<sub>total</sub></p>
+                        <p><b>Paso 3: Despejar P<sub>He, final</sub>:</b><br>P<sub>He, final</sub> = (3.00 atm × 10.0 L) / 25.0 L = 30.0 / 25.0 = <b>1.20 atm</b></p>
+                        <p class="text-[11px] text-slate-400 italic">Curiosidad: De igual modo P<sub>Ne, final</sub> = (2.00 × 15.0) / 25.0 = 1.20 atm. Por Dalton, P<sub>total</sub> final = 1.20 + 1.20 = 2.40 atm.</p>
+                    </div>
+                `
+            }
+        ];
+
+        function toggleHint(qId) {
+            const hintEl = document.getElementById(`q-hint-box-${qId}`);
+            if (hintEl) hintEl.classList.toggle('hidden');
+        }
+
+        function toggleSolution(qId) {
+            const solEl = document.getElementById(`q-sol-box-${qId}`);
+            if (solEl) solEl.classList.toggle('hidden');
+        }
+
+        function checkNewQuizQuestion(qId) {
+            const q = quizData.find(item => item.id === qId);
+            if (!q) return;
+
+            const inputEl = document.getElementById(`q-input-${qId}`);
+            const feedbackEl = document.getElementById(`q-feedback-${qId}`);
+            const statusEl = document.getElementById(`q-status-${qId}`);
+            
+            if (!inputEl) return;
+            const rawVal = inputEl.value.trim().replace(',', '.');
+            const val = parseFloat(rawVal);
 
             if (isNaN(val)) {
-                feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-amber-500/10 border-amber-500/30 text-amber-300';
-                feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Por favor ingresa un valor numérico antes de comprobar.';
-                feedback.classList.remove('hidden');
+                feedbackEl.className = 'text-xs p-3.5 rounded-xl border mt-3 bg-amber-500/10 border-amber-500/30 text-amber-300';
+                feedbackEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Ingresa un número válido antes de comprobar (ej. 0.84 o 0,84).';
+                feedbackEl.classList.remove('hidden');
                 return;
             }
 
-            // Margen de tolerancia razonable +/- 0.03
-            if (Math.abs(val - expected) <= 0.03) {
-                feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
-                if (id === 1) {
-                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> P<sub>total</sub> = P<sub>N<sub>2</sub></sub> + P<sub>O<sub>2</sub></sub> + P<sub>Ar</sub> = 0.78 + 0.21 + 0.01 = <b>1.00 atm</b>.`;
-                } else if (id === 2) {
-                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> X<sub>N<sub>2</sub></sub> = n<sub>N<sub>2</sub></sub> / n<sub>total</sub> = 3.0 / 5.0 = <b>0.60</b>.`;
-                } else if (id === 3) {
-                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> P<sub>O<sub>2</sub></sub> = X<sub>O<sub>2</sub></sub> × P<sub>total</sub> = 0.25 × 4.00 atm = <b>1.00 atm</b>.`;
-                }
-                status.innerText = 'Resuelto';
-                status.className = 'text-xs font-mono text-emerald-400 font-bold';
-                quizResults[id] = true;
+            const isCorrect = Math.abs(val - q.answer) <= q.tolerance;
+
+            if (isCorrect) {
+                feedbackEl.className = 'text-xs p-3.5 rounded-xl border mt-3 bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-sm mr-1.5 text-emerald-400"></i><b>¡Respuesta Correcta (+${q.pts} pts)!</b> El resultado exacto es ${q.answer} ${q.unit}.`;
+                statusEl.innerText = '✅ Resuelto';
+                statusEl.className = 'text-xs font-mono text-emerald-400 font-bold';
+                quizResults[qId] = q.pts;
             } else {
-                feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-rose-500/10 border-rose-500/30 text-rose-300';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i><b>Incorrecto.</b> Revisa tus cálculos. El valor correcto esperado es <b>${expected.toFixed(2)}</b>.`;
-                quizResults[id] = false;
+                feedbackEl.className = 'text-xs p-3.5 rounded-xl border mt-3 bg-rose-500/10 border-rose-500/30 text-rose-300';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-sm mr-1.5 text-rose-400"></i><b>Valor incorrecto.</b> Revisa tus cálculos. Puedes consultar la "💡 Pista" o ver la "📐 Solución" paso a paso.`;
+                quizResults[qId] = 0;
             }
-            feedback.classList.remove('hidden');
-            updateQuizScore();
+            feedbackEl.classList.remove('hidden');
+            updateOverallScorecard();
         }
 
-        function checkMCQ(id, correctOpt) {
-            const selected = document.querySelector(`input[name="q${id}"]:checked`);
-            const feedback = document.getElementById(`q-feedback-${id}`);
-            const status = document.getElementById(`q-status-${id}`);
+        function updateOverallScorecard() {
+            let earned = 0;
+            let totalPossible = 0;
+            let solvedCount = 0;
 
-            if (!selected) {
-                feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-amber-500/10 border-amber-500/30 text-amber-300';
-                feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Selecciona una opción antes de comprobar.';
-                feedback.classList.remove('hidden');
-                return;
-            }
+            quizData.forEach(q => {
+                totalPossible += q.pts;
+                if (quizResults[q.id] && quizResults[q.id] > 0) {
+                    earned += quizResults[q.id];
+                    solvedCount++;
+                }
+            });
 
-            if (selected.value === correctOpt) {
-                feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
-                if (id === 4) {
-                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> Al reducir el volumen a la mitad (V / 2), según la ecuación P<sub>i</sub> = (n<sub>i</sub> · R · T) / V, la presión parcial de cada gas individual se <b>duplica</b>.`;
+            const scoreEl = document.getElementById('quiz-score-pts');
+            const pctEl = document.getElementById('quiz-progress-bar');
+            const rankEl = document.getElementById('quiz-rank-badge');
+            const solvedCountEl = document.getElementById('quiz-solved-count');
+
+            if (scoreEl) scoreEl.innerText = `${earned} / ${totalPossible} pts`;
+            if (solvedCountEl) solvedCountEl.innerText = `${solvedCount} / ${quizData.length}`;
+
+            const pct = totalPossible > 0 ? (earned / totalPossible) * 100 : 0;
+            if (pctEl) pctEl.style.width = `${pct}%`;
+
+            let rank = '🔰 Novato';
+            if (earned >= 160) rank = '🚀 Experto en Termodinámica';
+            else if (earned >= 110) rank = '🎓 Especialista en Dalton';
+            else if (earned >= 60) rank = '📐 Técnico de Laboratorio';
+            else if (earned > 0) rank = '🧪 Aprendiz de Gases';
+
+            if (rankEl) rankEl.innerText = rank;
+        }
+
+        function filterQuiz(filter) {
+            const filterBtns = ['all', 'facil', 'intermedio', 'avanzado', 'master'];
+            filterBtns.forEach(f => {
+                const btn = document.getElementById(`quiz-filter-${f}`);
+                if (!btn) return;
+                if (f === filter) {
+                    btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md border border-indigo-400/30';
                 } else {
-                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> Cada gas ejerce su presión de forma independiente. Eliminar u ocultar otros gases no altera la fuerza de impacto ni la frecuencia de colisiones del N<sub>2</sub> (P<sub>N<sub>2</sub></sub>).`;
+                    btn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800 text-slate-400 hover:text-white border border-slate-700 hover:bg-slate-700/50';
                 }
-                status.innerText = 'Resuelto';
-                status.className = 'text-xs font-mono text-emerald-400 font-bold';
-                quizResults[id] = true;
-            } else {
-                feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-rose-500/10 border-rose-500/30 text-rose-300';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i><b>Incorrecto.</b> Recuerda que en la ley de Dalton cada gas se comporta independientemente en todo el volumen.`;
-                quizResults[id] = false;
-            }
-            feedback.classList.remove('hidden');
-            updateQuizScore();
+            });
+
+            quizData.forEach(q => {
+                const card = document.getElementById(`q-card-${q.id}`);
+                if (!card) return;
+                if (filter === 'all' || q.level === filter) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
         }
 
-        function updateQuizScore() {
-            const count = Object.values(quizResults).filter(Boolean).length;
-            document.getElementById('quiz-score').innerText = `${count} / 5`;
+        function renderQuizCards() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+
+            container.innerHTML = quizData.map(q => `
+                <div id="q-card-${q.id}" class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4 hover:border-slate-700 transition-all shadow-md">
+                    <!-- Header de la tarjeta -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg border ${q.levelClass}">
+                                ${q.levelLabel} (+${q.pts} pts)
+                            </span>
+                            <span class="text-xs font-medium px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1.5">
+                                <i class="fa-solid ${q.icon} text-indigo-400"></i>
+                                ${q.context}
+                            </span>
+                        </div>
+                        <span id="q-status-${q.id}" class="text-xs font-mono text-slate-400 font-semibold">
+                            ${quizResults[q.id] > 0 ? '✅ Resuelto' : '⏳ Pendiente'}
+                        </span>
+                    </div>
+
+                    <!-- Título y Enunciado -->
+                    <div>
+                        <h3 class="text-base font-bold text-slate-100 mb-1.5 flex items-center gap-2">
+                            ${q.title}
+                        </h3>
+                        <p class="text-sm text-slate-300 font-normal leading-relaxed">
+                            ${q.questionHtml}
+                        </p>
+                    </div>
+
+                    <!-- Entrada de Respuesta e Interacción -->
+                    <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center gap-2">
+                            <label for="q-input-${q.id}" class="text-xs font-semibold text-slate-400">Respuesta:</label>
+                            <input type="text" id="q-input-${q.id}" placeholder="0.00" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-sm text-slate-100 font-mono w-32 focus:outline-none focus:border-indigo-500 transition-colors">
+                            <span class="text-xs font-bold text-slate-400 font-mono">${q.unit}</span>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleHint(${q.id})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl text-xs font-medium border border-slate-700 transition-all flex items-center gap-1">
+                                <i class="fa-solid fa-lightbulb text-amber-400"></i>
+                                <span>Pista</span>
+                            </button>
+                            <button onclick="toggleSolution(${q.id})" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-indigo-300 rounded-xl text-xs font-medium border border-slate-700 transition-all flex items-center gap-1">
+                                <i class="fa-solid fa-graduation-cap text-indigo-400"></i>
+                                <span>Solución</span>
+                            </button>
+                            <button onclick="checkNewQuizQuestion(${q.id})" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md transition-all">
+                                Comprobar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pista Box (Oculto por defecto) -->
+                    <div id="q-hint-box-${q.id}" class="hidden text-xs p-3 rounded-xl border bg-amber-500/10 border-amber-500/30 text-amber-200 space-y-1">
+                        <div class="font-bold flex items-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb text-amber-400"></i> Pista Metodológica:
+                        </div>
+                        <div class="leading-relaxed">${q.hintHtml}</div>
+                    </div>
+
+                    <!-- Solución Paso a Paso Box (Oculto por defecto) -->
+                    <div id="q-sol-box-${q.id}" class="hidden text-xs p-3.5 rounded-xl border bg-slate-950 border-indigo-500/30 text-slate-200 space-y-2">
+                        <div class="font-bold text-indigo-400 flex items-center gap-1.5 border-b border-slate-800 pb-1.5">
+                            <i class="fa-solid fa-square-root-variable"></i> Deducción Paso a Paso:
+                        </div>
+                        <div>${q.solutionHtml}</div>
+                    </div>
+
+                    <!-- Feedback de Respuesta -->
+                    <div id="q-feedback-${q.id}" class="hidden"></div>
+                </div>
+            `).join('');
         }
 
         window.onload = function() {
@@ -1046,6 +1304,9 @@
             bindControls();
             syncParticleCounts();
             updateCalculations();
+
+            renderQuizCards();
+            updateOverallScorecard();
 
             renderSim();
         };
