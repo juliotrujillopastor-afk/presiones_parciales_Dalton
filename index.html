@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ley de Dalton: Presiones Parciales</title>
-    <!-- Tailwind CSS -->
+    <title>Ley de las Presiones Parciales de Dalton</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter y JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -33,26 +33,27 @@
     </script>
 
     <style>
-        /* Estilos personalizados para sliders y canvas */
         input[type=range] {
             accent-color: #6366F1;
         }
         .glow-box {
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.12);
         }
         .canvas-container {
             background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        }
+        sub, sup {
+            line-height: 0;
         }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header principal -->
     <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
                 <div class="p-2.5 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-xl shadow-lg shadow-indigo-500/20 text-white">
-                    <i class="fa-solid font-bold fa-atom text-xl"></i>
+                    <i class="fa-solid fa-atom text-xl"></i>
                 </div>
                 <div>
                     <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-indigo-300 bg-clip-text text-transparent">
@@ -92,7 +93,7 @@
                         <i class="fa-solid fa-wind text-lg"></i>
                     </div>
                     <div>
-                        <span class="text-xs font-semibold text-slate-400 block">Presión N₂ ($P_{N2}$)</span>
+                        <span class="text-xs font-semibold text-slate-400 block">Presión N<sub>2</sub> (P<sub>N<sub>2</sub></sub>)</span>
                         <span id="stat-pn2" class="text-lg font-bold text-blue-400 font-mono">0.00 atm</span>
                     </div>
                 </div>
@@ -102,7 +103,7 @@
                         <i class="fa-solid fa-fire-flame-simple text-lg"></i>
                     </div>
                     <div>
-                        <span class="text-xs font-semibold text-slate-400 block">Presión O₂ ($P_{O2}$)</span>
+                        <span class="text-xs font-semibold text-slate-400 block">Presión O<sub>2</sub> (P<sub>O<sub>2</sub></sub>)</span>
                         <span id="stat-po2" class="text-lg font-bold text-red-400 font-mono">0.00 atm</span>
                     </div>
                 </div>
@@ -112,7 +113,7 @@
                         <i class="fa-solid fa-circle-dot text-lg"></i>
                     </div>
                     <div>
-                        <span class="text-xs font-semibold text-slate-400 block">Presión Ar ($P_{Ar}$)</span>
+                        <span class="text-xs font-semibold text-slate-400 block">Presión Ar (P<sub>Ar</sub>)</span>
                         <span id="stat-par" class="text-lg font-bold text-emerald-400 font-mono">0.00 atm</span>
                     </div>
                 </div>
@@ -122,13 +123,12 @@
                         <i class="fa-solid fa-gauge-high text-lg"></i>
                     </div>
                     <div>
-                        <span class="text-xs font-semibold text-indigo-300 block">Presión Total ($P_{total}$)</span>
+                        <span class="text-xs font-semibold text-indigo-300 block">Presión Total (P<sub>total</sub>)</span>
                         <span id="stat-ptotal" class="text-xl font-black text-indigo-300 font-mono">0.00 atm</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Grid Principal: Controles | Canvas | Manómetros y Proporciones -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 
                 <!-- Columna Izquierda: Panel de Parámetros Controlables -->
@@ -148,7 +148,7 @@
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-n2" class="font-medium text-blue-400 flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span>
-                                Nitrógeno ($N_2$)
+                                Nitrógeno (N<sub>2</sub>)
                             </label>
                             <span id="val-n2" class="font-mono text-xs bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded-md border border-blue-500/20">30 partículas</span>
                         </div>
@@ -160,7 +160,7 @@
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-o2" class="font-medium text-red-400 flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
-                                Oxígeno ($O_2$)
+                                Oxígeno (O<sub>2</sub>)
                             </label>
                             <span id="val-o2" class="font-mono text-xs bg-red-500/10 text-red-300 px-2 py-0.5 rounded-md border border-red-500/20">20 partículas</span>
                         </div>
@@ -172,7 +172,7 @@
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-ar" class="font-medium text-emerald-400 flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-                                Argón ($Ar$)
+                                Argón (Ar)
                             </label>
                             <span id="val-ar" class="font-mono text-xs bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded-md border border-emerald-500/20">10 partículas</span>
                         </div>
@@ -186,7 +186,7 @@
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-vol" class="font-medium text-slate-300 flex items-center gap-2">
                                 <i class="fa-solid fa-up-down-left-right text-indigo-400 text-xs"></i>
-                                Volumen del Contenedor ($V$)
+                                Volumen del Contenedor (V)
                             </label>
                             <span id="val-vol" class="font-mono text-xs bg-indigo-500/10 text-indigo-300 px-2 py-0.5 rounded-md border border-indigo-500/20">22.4 L</span>
                         </div>
@@ -198,7 +198,7 @@
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-temp" class="font-medium text-slate-300 flex items-center gap-2">
                                 <i class="fa-solid fa-temperature-three-quarters text-amber-400 text-xs"></i>
-                                Temperatura ($T$)
+                                Temperatura (T)
                             </label>
                             <span id="val-temp" class="font-mono text-xs bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded-md border border-amber-500/20">273 K (0°C)</span>
                         </div>
@@ -217,10 +217,10 @@
                                 <i class="fa-solid fa-layer-group mr-1.5"></i>Todos (Mezcla)
                             </button>
                             <button onclick="setGasFilter('N2')" id="filter-N2" class="filter-btn text-xs py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-400 font-medium hover:border-blue-500/50 transition-all">
-                                <span class="w-2 h-2 rounded-full bg-blue-500 inline-block mr-1"></span>Solo N₂
+                                <span class="w-2 h-2 rounded-full bg-blue-500 inline-block mr-1"></span>Solo N<sub>2</sub>
                             </button>
                             <button onclick="setGasFilter('O2')" id="filter-O2" class="filter-btn text-xs py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-400 font-medium hover:border-red-500/50 transition-all">
-                                <span class="w-2 h-2 rounded-full bg-red-500 inline-block mr-1"></span>Solo O₂
+                                <span class="w-2 h-2 rounded-full bg-red-500 inline-block mr-1"></span>Solo O<sub>2</sub>
                             </button>
                             <button onclick="setGasFilter('Ar')" id="filter-Ar" class="filter-btn text-xs py-2 px-3 rounded-lg border border-slate-700 bg-slate-800 text-slate-400 font-medium hover:border-emerald-500/50 transition-all">
                                 <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block mr-1"></span>Solo Ar
@@ -233,7 +233,6 @@
                     </div>
                 </div>
 
-                <!-- Columna Central: Simulación Física Canvas 2D -->
                 <div class="lg:col-span-5 flex flex-col items-center">
                     <div class="w-full bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col items-center glow-box">
                         <div class="w-full flex justify-between items-center mb-3">
@@ -249,40 +248,38 @@
                             </span>
                         </div>
 
-                        <!-- Canvas -->
+                        <!-- Canvas 2D -->
                         <div class="relative w-full aspect-square max-w-[380px] rounded-xl overflow-hidden canvas-container border-2 border-slate-700 shadow-inner">
                             <canvas id="simCanvas" width="380" height="380" class="w-full h-full block"></canvas>
                         </div>
 
-                        <!-- Leyenda interactiva de partículas bajo el canvas -->
+                        <!-- Leyenda interactiva de partículas -->
                         <div class="w-full mt-4 flex items-center justify-around text-xs border-t border-slate-800 pt-3">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span>
-                                <span class="text-slate-300 font-medium">N₂ ($28\text{ g/mol}$)</span>
+                                <span class="text-slate-300 font-medium">N<sub>2</sub> (28 g/mol)</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 rounded-full bg-red-500 shadow-sm shadow-red-500/50"></span>
-                                <span class="text-slate-300 font-medium">O₂ ($32\text{ g/mol}$)</span>
+                                <span class="text-slate-300 font-medium">O<sub>2</sub> (32 g/mol)</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span>
-                                <span class="text-slate-300 font-medium">Ar ($40\text{ g/mol}$)</span>
+                                <span class="text-slate-300 font-medium">Ar (40 g/mol)</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Columna Derecha: Indicadores de Presión y Fracciones Molares -->
                 <div class="lg:col-span-3 space-y-5">
                     
-                    <!-- Manómetro Digital Rápido -->
                     <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-4">
                         <h3 class="font-bold text-slate-200 text-sm border-b border-slate-800 pb-2 flex items-center gap-2">
                             <i class="fa-solid fa-chart-pie text-indigo-400"></i>
                             Distribución de Presión Parcial
                         </h3>
 
-                        <!-- Barra Proporcional Acumulada (Fracciones) -->
+                        <!-- Barra Proporcional Acumulada -->
                         <div>
                             <div class="flex justify-between text-xs text-slate-400 mb-1.5">
                                 <span>Fracción Molar Total</span>
@@ -302,7 +299,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
                                     <div>
-                                        <div class="text-xs font-semibold text-slate-200">Nitrógeno ($N_2$)</div>
+                                        <div class="text-xs font-semibold text-slate-200">Nitrógeno (N<sub>2</sub>)</div>
                                         <div class="text-[11px] text-slate-400 font-mono" id="frac-n2">X = 0.500</div>
                                     </div>
                                 </div>
@@ -317,7 +314,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
                                     <div>
-                                        <div class="text-xs font-semibold text-slate-200">Oxígeno ($O_2$)</div>
+                                        <div class="text-xs font-semibold text-slate-200">Oxígeno (O<sub>2</sub>)</div>
                                         <div class="text-[11px] text-slate-400 font-mono" id="frac-o2">X = 0.333</div>
                                     </div>
                                 </div>
@@ -332,7 +329,7 @@
                                 <div class="flex items-center gap-2">
                                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                                     <div>
-                                        <div class="text-xs font-semibold text-slate-200">Argón ($Ar$)</div>
+                                        <div class="text-xs font-semibold text-slate-200">Argón (Ar)</div>
                                         <div class="text-[11px] text-slate-400 font-mono" id="frac-ar">X = 0.167</div>
                                     </div>
                                 </div>
@@ -365,7 +362,7 @@
                     Fundamentos Matemáticos de la Ley de Dalton
                 </h2>
                 <p class="text-slate-300 text-sm leading-relaxed">
-                    Formulada por John Dalton en 1801, establece que en una mezcla de gases no reactivos, la **presión total** ejercida es igual a la **suma de las presiones parciales** de cada uno de los gases individuales presentes.
+                    Formulada por John Dalton en 1801, establece que en una mezcla de gases no reactivos, la <b>presión total</b> ejercida es igual a la <b>suma de las presiones parciales</b> de cada uno de los gases individuales presentes en el contenedor.
                 </p>
             </div>
 
@@ -376,19 +373,19 @@
                         <div class="p-2.5 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
                             <i class="fa-solid fa-calculator text-lg"></i>
                         </div>
-                        <h3 class="font-bold text-slate-200">1. Presión Total ($P_{total}$)</h3>
+                        <h3 class="font-bold text-slate-200">1. Presión Total (P<sub>total</sub>)</h3>
                     </div>
                     <p class="text-xs text-slate-400 leading-relaxed">
                         Cada gas se comporta de manera independiente dentro del contenedor, chocando contra las paredes como si los otros gases no existieran.
                     </p>
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center font-mono text-indigo-300 text-lg font-bold">
-                        P_total = P_1 + P_2 + P_3 + ... + P_n
+                        P<sub>total</sub> = P<sub>1</sub> + P<sub>2</sub> + P<sub>3</sub> + ... + P<sub>n</sub>
                     </div>
                     <!-- Calculador interactivo con variables reales del laboratorio -->
                     <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/50 space-y-1 text-xs">
                         <div class="text-slate-400 font-semibold mb-1">Sustitución en Vivo del Simulador:</div>
                         <div id="theory-calc-ptotal" class="font-mono text-slate-200">
-                            P_total = 0.00 atm + 0.00 atm + 0.00 atm = 0.00 atm
+                            P<sub>total</sub> = 0.00 atm + 0.00 atm + 0.00 atm = 0.00 atm
                         </div>
                     </div>
                 </div>
@@ -399,16 +396,16 @@
                         <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl border border-amber-500/20">
                             <i class="fa-solid fa-pie-chart text-lg"></i>
                         </div>
-                        <h3 class="font-bold text-slate-200">2. Fracción Molar ($X_i$)</h3>
+                        <h3 class="font-bold text-slate-200">2. Fracción Molar (X<sub>i</sub>)</h3>
                     </div>
                     <p class="text-xs text-slate-400 leading-relaxed">
                         Representa la proporción adimensional de moléculas de un gas específico respecto al número total de moles en la mezcla.
                     </p>
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center font-mono text-amber-300 text-lg font-bold">
-                        X_i = n_i / n_total
+                        X<sub>i</sub> = n<sub>i</sub> / n<sub>total</sub>
                     </div>
                     <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/50 space-y-1 text-xs font-mono text-slate-200" id="theory-calc-molar">
-                        X_N2 = 30 / 60 = 0.500
+                        X<sub>N<sub>2</sub></sub> = 0.60 mol / 1.20 mol = 0.500
                     </div>
                 </div>
             </div>
@@ -423,21 +420,21 @@
                     Multiplicando la fracción molar por la presión total del sistema obtenemos la presión parcial directa de cualquier gas individual:
                 </p>
                 <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center font-mono text-emerald-400 text-xl font-black">
-                    P_i = X_i · P_total
+                    P<sub>i</sub> = X<sub>i</sub> · P<sub>total</sub>
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                     <div class="bg-blue-950/30 border border-blue-500/30 p-3 rounded-xl text-xs font-mono space-y-1">
-                        <span class="text-blue-400 font-bold block">Nitrógeno N₂:</span>
-                        <span id="theory-calc-pn2" class="text-slate-300">P_N2 = 0.50 × P_total</span>
+                        <span class="text-blue-400 font-bold block">Nitrógeno (N<sub>2</sub>):</span>
+                        <span id="theory-calc-pn2" class="text-slate-300">P<sub>N<sub>2</sub></sub> = 0.50 × P<sub>total</sub></span>
                     </div>
                     <div class="bg-red-950/30 border border-red-500/30 p-3 rounded-xl text-xs font-mono space-y-1">
-                        <span class="text-red-400 font-bold block">Oxígeno O₂:</span>
-                        <span id="theory-calc-po2" class="text-slate-300">P_O2 = 0.33 × P_total</span>
+                        <span class="text-red-400 font-bold block">Oxígeno (O<sub>2</sub>):</span>
+                        <span id="theory-calc-po2" class="text-slate-300">P<sub>O<sub>2</sub></sub> = 0.33 × P<sub>total</sub></span>
                     </div>
                     <div class="bg-emerald-950/30 border border-emerald-500/30 p-3 rounded-xl text-xs font-mono space-y-1">
-                        <span class="text-emerald-400 font-bold block">Argón Ar:</span>
-                        <span id="theory-calc-par" class="text-slate-300">P_Ar = 0.17 × P_total</span>
+                        <span class="text-emerald-400 font-bold block">Argón (Ar):</span>
+                        <span id="theory-calc-par" class="text-slate-300">P<sub>Ar</sub> = 0.17 × P<sub>total</sub></span>
                     </div>
                 </div>
             </div>
@@ -471,12 +468,16 @@
                         </span>
                         <span id="q-status-1" class="text-xs font-mono text-slate-400">Pendiente</span>
                     </div>
-                    <p class="text-sm text-slate-200 font-medium">
-                        Un recipiente de laboratorio contiene una mezcla gaseosa donde $P_{N2} = 0.78\text{ atm}$, $P_{O2} = 0.21\text{ atm}$ y $P_{Ar} = 0.01\text{ atm}$. ¿Cuál es la presión total ($P_{total}$) dentro del recipiente?
+                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
+                        Un recipiente de laboratorio contiene una mezcla gaseosa donde 
+                        <span class="font-semibold text-blue-400">P<sub>N<sub>2</sub></sub> = 0.78 atm</span>, 
+                        <span class="font-semibold text-red-400">P<sub>O<sub>2</sub></sub> = 0.21 atm</span> y 
+                        <span class="font-semibold text-emerald-400">P<sub>Ar</sub> = 0.01 atm</span>. 
+                        ¿Cuál es la presión total (<span class="font-semibold text-indigo-300">P<sub>total</sub></span>) dentro del recipiente?
                     </p>
                     <div class="flex flex-wrap items-center gap-3 pt-1">
                         <input type="number" id="q-input-1" step="0.01" placeholder="Ej: 1.00" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono w-32">
-                        <span class="text-sm text-slate-400">atm</span>
+                        <span class="text-sm text-slate-400 font-medium">atm</span>
                         <button onclick="checkQuestion(1, 1.00)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all">
                             Comprobar
                         </button>
@@ -492,8 +493,8 @@
                         </span>
                         <span id="q-status-2" class="text-xs font-mono text-slate-400">Pendiente</span>
                     </div>
-                    <p class="text-sm text-slate-200 font-medium">
-                        Si un tanque rígido contiene $3.0\text{ moles}$ de $N_2$, $1.0\text{ mole}$ de $O_2$ y $1.0\text{ mole}$ de $Ar$ (Total $5.0\text{ moles}$), ¿cuál es la **fracción molar ($X_{N2}$)** del Nitrógeno?
+                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
+                        Si un tanque rígido contiene <b>3.0 moles</b> de N<sub>2</sub>, <b>1.0 mol</b> de O<sub>2</sub> y <b>1.0 mol</b> de Ar (Total: <b>5.0 moles</b>), ¿cuál es la <b class="text-amber-300">fracción molar (X<sub>N<sub>2</sub></sub>)</b> del Nitrógeno?
                     </p>
                     <div class="flex flex-wrap items-center gap-3 pt-1">
                         <input type="number" id="q-input-2" step="0.01" placeholder="Ej: 0.60" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono w-32">
@@ -508,16 +509,16 @@
                 <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 space-y-3" id="q-card-3">
                     <div class="flex items-start justify-between">
                         <span class="text-xs font-bold px-2.5 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg border border-indigo-500/20">
-                            Pregunta 3 (Presión Parcial a partir de X_i)
+                            Pregunta 3 (Presión Parcial a partir de X<sub>i</sub>)
                         </span>
                         <span id="q-status-3" class="text-xs font-mono text-slate-400">Pendiente</span>
                     </div>
-                    <p class="text-sm text-slate-200 font-medium">
-                        La presión total en un tanque de buceo es de $4.00\text{ atm}$. Si la fracción molar del Oxígeno es $X_{O2} = 0.25$, ¿cuál es su presión parcial ($P_{O2}$)?
+                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
+                        La presión total en un tanque de buceo es de <b>4.00 atm</b>. Si la fracción molar del Oxígeno es <b class="text-amber-300">X<sub>O<sub>2</sub></sub> = 0.25</b>, ¿cuál es su presión parcial (<span class="text-red-400 font-semibold">P<sub>O<sub>2</sub></sub></span>)?
                     </p>
                     <div class="flex flex-wrap items-center gap-3 pt-1">
                         <input type="number" id="q-input-3" step="0.01" placeholder="Ej: 1.00" class="bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 font-mono w-32">
-                        <span class="text-sm text-slate-400">atm</span>
+                        <span class="text-sm text-slate-400 font-medium">atm</span>
                         <button onclick="checkQuestion(3, 1.00)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all">
                             Comprobar
                         </button>
@@ -533,21 +534,21 @@
                         </span>
                         <span id="q-status-4" class="text-xs font-mono text-slate-400">Pendiente</span>
                     </div>
-                    <p class="text-sm text-slate-200 font-medium">
-                        Si empujamos el pistón reduciendo el volumen del contenedor a la mitad ($V/2$) a temperatura constante, ¿qué sucede con las presiones parciales de los gases?
+                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
+                        Si empujamos el pistón reduciendo el volumen del contenedor a la mitad (<b>V / 2</b>) a temperatura constante, ¿qué sucede con las presiones parciales de los gases?
                     </p>
                     <div class="space-y-2 pt-1 text-xs">
                         <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
                             <input type="radio" name="q4" value="A" class="text-indigo-600">
-                            <span>A) Permanecen iguales porque las moles no cambiaron.</span>
+                            <span>A) Permanecen iguales porque la cantidad de moles no cambió.</span>
                         </label>
                         <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
                             <input type="radio" name="q4" value="B" class="text-indigo-600">
-                            <span>B) Todas las presiones parciales se duplican ($2 \times P_i$).</span>
+                            <span>B) Todas las presiones parciales se duplican (2 × P<sub>i</sub>).</span>
                         </label>
                         <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
                             <input type="radio" name="q4" value="C" class="text-indigo-600">
-                            <span>C) Solo la presión del gas con más moléculas aumenta.</span>
+                            <span>C) Solo la presión del gas con mayor masa molecular aumenta.</span>
                         </label>
                     </div>
                     <button onclick="checkMCQ(4, 'B')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all mt-2">
@@ -564,21 +565,21 @@
                         </span>
                         <span id="q-status-5" class="text-xs font-mono text-slate-400">Pendiente</span>
                     </div>
-                    <p class="text-sm text-slate-200 font-medium">
-                        Si extraemos visualmente o eliminamos los gases $O_2$ y $Ar$, dejando solo el $N_2$ en el contenedor al mismo volumen y temperatura, ¿qué valor tendrá la presión del $N_2$?
+                    <p class="text-sm text-slate-200 font-medium leading-relaxed">
+                        Si aislamos visualmente o eliminamos los gases O<sub>2</sub> y Ar, dejando únicamente el N<sub>2</sub> en el contenedor al mismo volumen y temperatura, ¿qué valor tendrá la presión ejercida por el N<sub>2</sub>?
                     </p>
                     <div class="space-y-2 pt-1 text-xs">
                         <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
                             <input type="radio" name="q5" value="A" class="text-indigo-600">
-                            <span>A) Cero, porque necesita a los otros gases para rebotar.</span>
+                            <span>A) Cero, porque necesita los otros gases para colisionar.</span>
                         </label>
                         <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
                             <input type="radio" name="q5" value="B" class="text-indigo-600">
-                            <span>B) El mismo valor de su presión parcial original ($P_{N2}$).</span>
+                            <span>B) El mismo valor de su presión parcial original (P<sub>N<sub>2</sub></sub>).</span>
                         </label>
                         <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800/50 cursor-pointer">
                             <input type="radio" name="q5" value="C" class="text-indigo-600">
-                            <span>C) Igual a la presión total anterior ($P_{total}$).</span>
+                            <span>C) Igual a la presión total inicial (P<sub>total</sub>).</span>
                         </label>
                     </div>
                     <button onclick="checkMCQ(5, 'B')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-all mt-2">
@@ -598,7 +599,7 @@
     </footer>
 
     <script>
-        /* === ESTADO DEL SIMULADOR === */
+        /* State configuration for the physical gas mixture */
         const state = {
             N2: 30,
             O2: 20,
@@ -607,17 +608,16 @@
             temp: 273,    // Kelvin
             activeFilter: 'all', // 'all', 'N2', 'O2', 'Ar'
             particles: [],
-            R: 0.08206    // Constante de gases ideales (L atm / mol K)
+            R: 0.08206    // Constante universal de gases ideales (L atm / mol K)
         };
 
-        // Escalas físicas para la renderización
+        // Propiedades físico-químicas de las especies gaseosas
         const SPECIES = {
             N2: { color: '#3B82F6', lightColor: '#93C5FD', mass: 28, radius: 4.5, name: 'Nitrógeno (N₂)' },
             O2: { color: '#EF4444', lightColor: '#FCA5A5', mass: 32, radius: 5.2, name: 'Oxígeno (O₂)' },
             Ar: { color: '#10B981', lightColor: '#6EE7B7', mass: 40, radius: 6.0, name: 'Argón (Ar)' }
         };
 
-        // Elementos Canvas
         let canvas, ctx;
         let animationFrameId;
 
@@ -627,10 +627,7 @@
                 this.props = SPECIES[type];
                 this.radius = this.props.radius;
                 
-                // Posición inicial aleatoria dentro del área válida
                 this.resetPosition();
-                
-                // Velocidad basada en temperatura y masa molecular (v ~ sqrt(3RT/M))
                 this.initVelocity();
             }
 
@@ -644,7 +641,6 @@
             }
 
             initVelocity() {
-                // Factor de velocidad según la masa molecular y temperatura
                 const speedScale = Math.sqrt(state.temp / this.props.mass) * 0.35;
                 const angle = Math.random() * Math.PI * 2;
                 this.vx = Math.cos(angle) * speedScale;
@@ -652,7 +648,6 @@
             }
 
             update(pistonY, width, height) {
-                // Actualizar velocidades según la temperatura global
                 const targetSpeed = Math.sqrt(state.temp / this.props.mass) * 0.35;
                 const currentSpeed = Math.hypot(this.vx, this.vy);
                 if (currentSpeed > 0) {
@@ -663,7 +658,7 @@
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Colisiones con pared izquierda / derecha
+                // Colisión con pared izquierda / derecha
                 if (this.x - this.radius <= 0) {
                     this.x = this.radius;
                     this.vx *= -1;
@@ -672,13 +667,13 @@
                     this.vx *= -1;
                 }
 
-                // Colisión con el fondo
+                // Colisión con pared inferior
                 if (this.y + this.radius >= height) {
                     this.y = height - this.radius;
                     this.vy *= -1;
                 }
 
-                // Colisión con el pistón móvil (techo)
+                // Colisión con pistón móvil superior
                 if (this.y - this.radius <= pistonY) {
                     this.y = pistonY + this.radius;
                     this.vy *= -1;
@@ -695,7 +690,6 @@
                     ctx.shadowColor = this.props.color;
                     ctx.shadowBlur = 8;
                 } else {
-                    // Si está filtrado visualmente, mostrar tenue / semitransparente
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
                     ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
                     ctx.lineWidth = 1;
@@ -707,7 +701,6 @@
             }
         }
 
-        // Obtener posición vertical Y del pistón en función del volumen (10L a 45L)
         function getPistonY() {
             const minVol = 10;
             const maxVol = 45;
@@ -726,12 +719,10 @@
                 const currentList = state.particles.filter(p => p.type === type);
 
                 if (currentList.length < targetCount) {
-                    // Agregar partículas faltantes
                     for (let i = 0; i < targetCount - currentList.length; i++) {
                         state.particles.push(new Particle(type));
                     }
                 } else if (currentList.length > targetCount) {
-                    // Eliminar partículas sobrantes
                     let toRemove = currentList.length - targetCount;
                     state.particles = state.particles.filter(p => {
                         if (p.type === type && toRemove > 0) {
@@ -744,7 +735,6 @@
             });
         }
 
-        // Resolver colisiones elásticas entre partículas (2D)
         function handleParticleCollisions() {
             const len = state.particles.length;
             for (let i = 0; i < len; i++) {
@@ -758,7 +748,6 @@
                     const minDist = p1.radius + p2.radius;
 
                     if (dist < minDist && dist > 0) {
-                        // Traslape
                         const overlap = 0.5 * (minDist - dist);
                         const nx = dx / dist;
                         const ny = dy / dist;
@@ -768,7 +757,6 @@
                         p2.x += nx * overlap;
                         p2.y += ny * overlap;
 
-                        // Transferencia de momento
                         const kx = p1.vx - p2.vx;
                         const ky = p1.vy - p2.vy;
                         const p = 2 * (nx * kx + ny * ky) / (p1.props.mass + p2.props.mass);
@@ -789,27 +777,25 @@
             const height = canvas.height;
             const pistonY = getPistonY();
 
-            // 1. Dibujar Contenedor (Paredes)
+            // Dibujar paredes del contenedor
             ctx.strokeStyle = '#334155';
             ctx.lineWidth = 4;
             ctx.strokeRect(2, 2, width - 4, height - 4);
 
-            // 2. Dibujar Pistón Móvil
+            // Dibujar pistón móvil
             ctx.fillStyle = '#475569';
             ctx.fillRect(4, pistonY - 16, width - 8, 16);
             
-            // Mango / Agarre del pistón
+            // Mango del pistón
             ctx.fillStyle = '#64748B';
             ctx.fillRect(width / 2 - 20, 0, 40, pistonY - 16);
 
-            // Detalle estético del pistón
+            // Borde estético inferior del pistón
             ctx.fillStyle = '#6366F1';
             ctx.fillRect(4, pistonY - 4, width - 8, 4);
 
-            // 3. Mover y colisionar partículas
             handleParticleCollisions();
 
-            // Ajustar posición si el pistón se mueve hacia abajo reduciendo el área
             state.particles.forEach(p => {
                 if (p.y - p.radius < pistonY) {
                     p.y = pistonY + p.radius + 2;
@@ -820,13 +806,11 @@
                 p.draw(ctx, isHighlighted);
             });
 
-            // Re-ejecutar bucle
             animationFrameId = requestAnimationFrame(renderSim);
         }
 
         function updateCalculations() {
-            // Conversión de número de partículas a moles simbólicos para la demo (1 particle = 0.02 mol)
-            const MOL_FACTOR = 0.02;
+            const MOL_FACTOR = 0.02; // 1 partícula = 0.02 moles simbólicos
             const nN2 = state.N2 * MOL_FACTOR;
             const nO2 = state.O2 * MOL_FACTOR;
             const nAr = state.Ar * MOL_FACTOR;
@@ -840,7 +824,7 @@
             // Presión Total con ley de gases ideales: P = (n_total * R * T) / V
             const P_total = nTotal > 0 ? (nTotal * state.R * state.temp) / state.volume : 0;
 
-            // Presiones parciales según Ley de Dalton: P_i = X_i * P_total
+            // Presiones parciales con ley de Dalton: P_i = X_i * P_total
             const P_N2 = X_N2 * P_total;
             const P_O2 = X_O2 * P_total;
             const P_Ar = X_Ar * P_total;
@@ -851,7 +835,6 @@
             document.getElementById('stat-par').innerText = `${P_Ar.toFixed(2)} atm`;
             document.getElementById('stat-ptotal').innerText = `${P_total.toFixed(2)} atm`;
 
-            // Textos en tarjetas laterales
             document.getElementById('frac-n2').innerText = `X = ${X_N2.toFixed(3)}`;
             document.getElementById('frac-o2').innerText = `X = ${X_O2.toFixed(3)}`;
             document.getElementById('frac-ar').innerText = `X = ${X_Ar.toFixed(3)}`;
@@ -873,20 +856,19 @@
             document.getElementById('equation-sum-live').innerText = 
                 `${P_total.toFixed(2)} = ${P_N2.toFixed(2)} + ${P_O2.toFixed(2)} + ${P_Ar.toFixed(2)}`;
 
-            // Actualizar sustituciones teóricas (Pestaña 2)
-            document.getElementById('theory-calc-ptotal').innerText = 
-                `P_total = ${P_N2.toFixed(2)} atm + ${P_O2.toFixed(2)} atm + ${P_Ar.toFixed(2)} atm = ${P_total.toFixed(2)} atm`;
+            // Actualizar sustituciones teóricas con HTML nativo limpio (Pestaña 2)
+            document.getElementById('theory-calc-ptotal').innerHTML = 
+                `P<sub>total</sub> = ${P_N2.toFixed(2)} atm + ${P_O2.toFixed(2)} atm + ${P_Ar.toFixed(2)} atm = <b>${P_total.toFixed(2)} atm</b>`;
 
-            document.getElementById('theory-calc-molar').innerText = 
-                `X_N2 = ${nN2.toFixed(2)} mol / ${nTotal.toFixed(2)} mol = ${X_N2.toFixed(3)}`;
+            document.getElementById('theory-calc-molar').innerHTML = 
+                `X<sub>N<sub>2</sub></sub> = ${nN2.toFixed(2)} mol / ${nTotal.toFixed(2)} mol = <b>${X_N2.toFixed(3)}</b>`;
 
-            document.getElementById('theory-calc-pn2').innerText = `P_N2 = ${X_N2.toFixed(3)} × ${P_total.toFixed(2)} atm = ${P_N2.toFixed(2)} atm`;
-            document.getElementById('theory-calc-po2').innerText = `P_O2 = ${X_O2.toFixed(3)} × ${P_total.toFixed(2)} atm = ${P_O2.toFixed(2)} atm`;
-            document.getElementById('theory-calc-par').innerText = `P_Ar = ${X_Ar.toFixed(3)} × ${P_total.toFixed(2)} atm = ${P_Ar.toFixed(2)} atm`;
+            document.getElementById('theory-calc-pn2').innerHTML = `P<sub>N<sub>2</sub></sub> = ${X_N2.toFixed(3)} × ${P_total.toFixed(2)} atm = <b>${P_N2.toFixed(2)} atm</b>`;
+            document.getElementById('theory-calc-po2').innerHTML = `P<sub>O<sub>2</sub></sub> = ${X_O2.toFixed(3)} × ${P_total.toFixed(2)} atm = <b>${P_O2.toFixed(2)} atm</b>`;
+            document.getElementById('theory-calc-par').innerHTML = `P<sub>Ar</sub> = ${X_Ar.toFixed(3)} × ${P_total.toFixed(2)} atm = <b>${P_Ar.toFixed(2)} atm</b>`;
         }
 
         function bindControls() {
-            // Slider N2
             document.getElementById('slider-n2').addEventListener('input', (e) => {
                 state.N2 = parseInt(e.target.value);
                 document.getElementById('val-n2').innerText = `${state.N2} partículas`;
@@ -894,7 +876,6 @@
                 updateCalculations();
             });
 
-            // Slider O2
             document.getElementById('slider-o2').addEventListener('input', (e) => {
                 state.O2 = parseInt(e.target.value);
                 document.getElementById('val-o2').innerText = `${state.O2} partículas`;
@@ -902,7 +883,6 @@
                 updateCalculations();
             });
 
-            // Slider Ar
             document.getElementById('slider-ar').addEventListener('input', (e) => {
                 state.Ar = parseInt(e.target.value);
                 document.getElementById('val-ar').innerText = `${state.Ar} partículas`;
@@ -910,14 +890,12 @@
                 updateCalculations();
             });
 
-            // Slider Volumen
             document.getElementById('slider-vol').addEventListener('input', (e) => {
                 state.volume = parseFloat(e.target.value);
                 document.getElementById('val-vol').innerText = `${state.volume.toFixed(1)} L`;
                 updateCalculations();
             });
 
-            // Slider Temperatura
             document.getElementById('slider-temp').addEventListener('input', (e) => {
                 state.temp = parseInt(e.target.value);
                 const celsius = state.temp - 273;
@@ -929,7 +907,6 @@
         function setGasFilter(filter) {
             state.activeFilter = filter;
             
-            // Estilos de botones
             const filters = ['all', 'N2', 'O2', 'Ar'];
             filters.forEach(f => {
                 const btn = document.getElementById(`filter-${f}`);
@@ -974,7 +951,6 @@
             updateCalculations();
         }
 
-        // Cambio de Pestañas
         function switchTab(tab) {
             const tabs = ['lab', 'theory', 'quiz'];
             tabs.forEach(t => {
@@ -1000,21 +976,27 @@
 
             if (isNaN(val)) {
                 feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-amber-500/10 border-amber-500/30 text-amber-300';
-                feedback.innerText = 'Por favor ingresa un número válido antes de comprobar.';
+                feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Por favor ingresa un valor numérico antes de comprobar.';
                 feedback.classList.remove('hidden');
                 return;
             }
 
-            // Margen de tolerancia de +/- 0.03
+            // Margen de tolerancia razonable +/- 0.03
             if (Math.abs(val - expected) <= 0.03) {
                 feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><strong>¡Correcto!</strong> $P_{total} = \\sum P_i = 0.78 + 0.21 + 0.01 = ${expected.toFixed(2)}\\text{ atm}$.`;
+                if (id === 1) {
+                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> P<sub>total</sub> = P<sub>N<sub>2</sub></sub> + P<sub>O<sub>2</sub></sub> + P<sub>Ar</sub> = 0.78 + 0.21 + 0.01 = <b>1.00 atm</b>.`;
+                } else if (id === 2) {
+                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> X<sub>N<sub>2</sub></sub> = n<sub>N<sub>2</sub></sub> / n<sub>total</sub> = 3.0 / 5.0 = <b>0.60</b>.`;
+                } else if (id === 3) {
+                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> P<sub>O<sub>2</sub></sub> = X<sub>O<sub>2</sub></sub> × P<sub>total</sub> = 0.25 × 4.00 atm = <b>1.00 atm</b>.`;
+                }
                 status.innerText = 'Resuelto';
                 status.className = 'text-xs font-mono text-emerald-400 font-bold';
                 quizResults[id] = true;
             } else {
                 feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-rose-500/10 border-rose-500/30 text-rose-300';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i><strong>Incorrecto.</strong> Revisa la suma de las presiones individuales. El valor esperado es $${expected.toFixed(2)}$.`;
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i><b>Incorrecto.</b> Revisa tus cálculos. El valor correcto esperado es <b>${expected.toFixed(2)}</b>.`;
                 quizResults[id] = false;
             }
             feedback.classList.remove('hidden');
@@ -1028,7 +1010,7 @@
 
             if (!selected) {
                 feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-amber-500/10 border-amber-500/30 text-amber-300';
-                feedback.innerText = 'Selecciona una opción antes de comprobar.';
+                feedback.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Selecciona una opción antes de comprobar.';
                 feedback.classList.remove('hidden');
                 return;
             }
@@ -1036,16 +1018,16 @@
             if (selected.value === correctOpt) {
                 feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-emerald-500/10 border-emerald-500/30 text-emerald-300';
                 if (id === 4) {
-                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><strong>¡Correcto!</strong> Al reducir el volumen a la mitad ($V/2$), según $P_i = \\frac{n_i R T}{V}$, la presión parcial de cada gas individual se duplica.`;
+                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> Al reducir el volumen a la mitad (V / 2), según la ecuación P<sub>i</sub> = (n<sub>i</sub> · R · T) / V, la presión parcial de cada gas individual se <b>duplica</b>.`;
                 } else {
-                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><strong>¡Correcto!</strong> Cada gas ejerce su presión como si estuviera completamente solo en el recipiente. Extraer otros gases no modifica la presión del $N_2$.`;
+                    feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i><b>¡Correcto!</b> Cada gas ejerce su presión de forma independiente. Eliminar u ocultar otros gases no altera la fuerza de impacto ni la frecuencia de colisiones del N<sub>2</sub> (P<sub>N<sub>2</sub></sub>).`;
                 }
                 status.innerText = 'Resuelto';
                 status.className = 'text-xs font-mono text-emerald-400 font-bold';
                 quizResults[id] = true;
             } else {
                 feedback.className = 'text-xs p-3 rounded-xl border mt-2 bg-rose-500/10 border-rose-500/30 text-rose-300';
-                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i><strong>Incorrecto.</strong> Inténtalo de nuevo recordando la independencia del comportamiento de cada gas en Dalton.`;
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5"></i><b>Incorrecto.</b> Recuerda que en la ley de Dalton cada gas se comporta independientemente en todo el volumen.`;
                 quizResults[id] = false;
             }
             feedback.classList.remove('hidden');
@@ -1065,7 +1047,6 @@
             syncParticleCounts();
             updateCalculations();
 
-            // Iniciar ciclo de simulación Canvas
             renderSim();
         };
     </script>
