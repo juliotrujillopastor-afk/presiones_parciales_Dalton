@@ -534,11 +534,11 @@
             R: 0.08206    // Constante universal de gases ideales (L atm / mol K)
         };
 
-        // Propiedades físico-químicas de las especies gaseosas
+        // Propiedades físico-químicas de las especies gaseosas (Radio ajustado proporcionalmente)
         const SPECIES = {
-            N2: { color: '#3B82F6', lightColor: '#93C5FD', mass: 28, radius: 4.5, name: 'Nitrógeno (N₂)' },
-            O2: { color: '#EF4444', lightColor: '#FCA5A5', mass: 32, radius: 5.2, name: 'Oxígeno (O₂)' },
-            Ar: { color: '#10B981', lightColor: '#6EE7B7', mass: 40, radius: 6.0, name: 'Argón (Ar)' }
+            N2: { color: '#3B82F6', lightColor: '#93C5FD', mass: 28, radius: 6.0, name: 'Nitrógeno (N₂)' },
+            O2: { color: '#EF4444', lightColor: '#FCA5A5', mass: 32, radius: 5.6, name: 'Oxígeno (O₂)' },
+            Ar: { color: '#10B981', lightColor: '#6EE7B7', mass: 40, radius: 4.5, name: 'Argón (Ar)' }
         };
 
         let canvas, ctx;
@@ -606,21 +606,53 @@
 
             draw(ctx, isHighlighted) {
                 ctx.save();
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 
-                if (isHighlighted) {
-                    ctx.fillStyle = this.props.color;
-                    ctx.shadowColor = this.props.color;
-                    ctx.shadowBlur = 8;
-                    ctx.fill();
+                if (this.type === 'N2' || this.type === 'O2') {
+                    // Moléculas diatómicas: 2 círculos unidos orientados en la dirección del movimiento
+                    const angle = (this.vx === 0 && this.vy === 0) ? 0 : Math.atan2(this.vy, this.vx);
+                    const d = this.radius * 0.5;  // Distancia desde el centro a cada átomo
+                    const r = this.radius * 0.65; // Radio de cada uno de los dos átomos unidos
+
+                    const x1 = this.x - d * Math.cos(angle);
+                    const y1 = this.y - d * Math.sin(angle);
+                    const x2 = this.x + d * Math.cos(angle);
+                    const y2 = this.y + d * Math.sin(angle);
+
+                    ctx.beginPath();
+                    ctx.arc(x1, y1, r, 0, Math.PI * 2);
+                    ctx.arc(x2, y2, r, 0, Math.PI * 2);
+
+                    if (isHighlighted) {
+                        ctx.fillStyle = this.props.color;
+                        ctx.shadowColor = this.props.color;
+                        ctx.shadowBlur = 8;
+                        ctx.fill();
+                    } else {
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                        ctx.lineWidth = 1;
+                        ctx.shadowBlur = 0;
+                        ctx.fill();
+                        ctx.stroke();
+                    }
                 } else {
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-                    ctx.lineWidth = 1;
-                    ctx.shadowBlur = 0;
-                    ctx.fill();
-                    ctx.stroke();
+                    // Átomo monoatómico (Argón)
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    
+                    if (isHighlighted) {
+                        ctx.fillStyle = this.props.color;
+                        ctx.shadowColor = this.props.color;
+                        ctx.shadowBlur = 8;
+                        ctx.fill();
+                    } else {
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                        ctx.lineWidth = 1;
+                        ctx.shadowBlur = 0;
+                        ctx.fill();
+                        ctx.stroke();
+                    }
                 }
                 
                 ctx.restore();
