@@ -143,40 +143,40 @@
                         </button>
                     </div>
 
-                    <!-- Cantidad de Partículas Nitrógeno N2 -->
+                    <!-- Cantidad de Moles Nitrógeno N2 -->
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-n2" class="font-medium text-blue-400 flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span>
                                 Nitrógeno (N<sub>2</sub>)
                             </label>
-                            <span id="val-n2" class="font-mono text-xs bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded-md border border-blue-500/20">30 partículas</span>
+                            <span id="val-n2" class="font-mono text-xs bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded-md border border-blue-500/20">0.60 mol</span>
                         </div>
-                        <input type="range" id="slider-n2" min="0" max="80" value="30" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                        <input type="range" id="slider-n2" min="0" max="2" step="0.02" value="0.60" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
                     </div>
 
-                    <!-- Cantidad de Partículas Oxígeno O2 -->
+                    <!-- Cantidad de Moles Oxígeno O2 -->
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-o2" class="font-medium text-red-400 flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
                                 Oxígeno (O<sub>2</sub>)
                             </label>
-                            <span id="val-o2" class="font-mono text-xs bg-red-500/10 text-red-300 px-2 py-0.5 rounded-md border border-red-500/20">20 partículas</span>
+                            <span id="val-o2" class="font-mono text-xs bg-red-500/10 text-red-300 px-2 py-0.5 rounded-md border border-red-500/20">0.40 mol</span>
                         </div>
-                        <input type="range" id="slider-o2" min="0" max="80" value="20" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                        <input type="range" id="slider-o2" min="0" max="2" step="0.02" value="0.40" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
                     </div>
 
-                    <!-- Cantidad de Partículas Argón Ar -->
+                    <!-- Cantidad de Moles Argón Ar -->
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-center text-sm">
                             <label for="slider-ar" class="font-medium text-emerald-400 flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
                                 Argón (Ar)
                             </label>
-                            <span id="val-ar" class="font-mono text-xs bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded-md border border-emerald-500/20">10 partículas</span>
+                            <span id="val-ar" class="font-mono text-xs bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded-md border border-emerald-500/20">0.20 mol</span>
                         </div>
-                        <input type="range" id="slider-ar" min="0" max="80" value="10" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
+                        <input type="range" id="slider-ar" min="0" max="2" step="0.02" value="0.20" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer">
                     </div>
 
                     <hr class="border-slate-800">
@@ -253,7 +253,7 @@
                             <canvas id="simCanvas" width="380" height="380" class="w-full h-full block"></canvas>
                         </div>
 
-                        <!-- Leyenda interactiva de partículas -->
+                        <!-- Leyenda interactiva de gases -->
                         <div class="w-full mt-4 flex items-center justify-around text-xs border-t border-slate-800 pt-3">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span>
@@ -268,6 +268,10 @@
                                 <span class="text-slate-300 font-medium">Ar (40 g/mol)</span>
                             </div>
                         </div>
+                        <p class="text-[11px] text-slate-400 mt-2.5 text-center italic">
+                            <i class="fa-solid fa-circle-info mr-1 text-indigo-400"></i>
+                            Escala del simulador: 1 esfera en la cámara representa 0,02 moles de gas.
+                        </p>
                     </div>
                 </div>
 
@@ -399,7 +403,7 @@
                         <h3 class="font-bold text-slate-200">2. Fracción Molar (X<sub>i</sub>)</h3>
                     </div>
                     <p class="text-xs text-slate-400 leading-relaxed">
-                        Representa la proporción adimensional de moléculas de un gas específico respecto al número total de moles en la mezcla.
+                        Representa la proporción adimensional de moles de un gas específico respecto al número total de moles en la mezcla.
                     </p>
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center font-mono text-amber-300 text-lg font-bold">
                         X<sub>i</sub> = n<sub>i</sub> / n<sub>total</sub>
@@ -518,11 +522,11 @@
     </footer>
 
     <script>
-        /* State configuration for the physical gas mixture */
+        /* Configuración de Estado de la Mezcla de Gases */
         const state = {
-            N2: 30,
-            O2: 20,
-            Ar: 10,
+            N2: 0.60,     // Moles de Nitrógeno
+            O2: 0.40,     // Moles de Oxígeno
+            Ar: 0.20,     // Moles de Argón
             volume: 22.4, // Litros
             temp: 273,    // Kelvin
             activeFilter: 'all', // 'all', 'N2', 'O2', 'Ar'
@@ -538,7 +542,6 @@
         };
 
         let canvas, ctx;
-        let animationFrameId;
 
         class Particle {
             constructor(type) {
@@ -556,7 +559,7 @@
                 const pistonY = getPistonY();
 
                 this.x = this.radius + Math.random() * (canvasW - 2 * this.radius);
-                this.y = pistonY + this.radius + Math.random() * (canvasH - pistonY - 2 * this.radius);
+                this.y = pistonY + this.radius + Math.random() * Math.max(10, canvasH - pistonY - 2 * this.radius);
             }
 
             initVelocity() {
@@ -577,25 +580,27 @@
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Colisión con pared izquierda / derecha
+                // Colisión con pared izquierda
                 if (this.x - this.radius <= 0) {
                     this.x = this.radius;
-                    this.vx *= -1;
-                } else if (this.x + this.radius >= width) {
+                    this.vx = Math.abs(this.vx);
+                } 
+                // Colisión con pared derecha
+                else if (this.x + this.radius >= width) {
                     this.x = width - this.radius;
-                    this.vx *= -1;
+                    this.vx = -Math.abs(this.vx);
                 }
 
                 // Colisión con pared inferior
                 if (this.y + this.radius >= height) {
                     this.y = height - this.radius;
-                    this.vy *= -1;
+                    this.vy = -Math.abs(this.vy);
                 }
 
                 // Colisión con pistón móvil superior
                 if (this.y - this.radius <= pistonY) {
                     this.y = pistonY + this.radius;
-                    this.vy *= -1;
+                    this.vy = Math.abs(this.vy);
                 }
             }
 
@@ -608,14 +613,16 @@
                     ctx.fillStyle = this.props.color;
                     ctx.shadowColor = this.props.color;
                     ctx.shadowBlur = 8;
+                    ctx.fill();
                 } else {
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
                     ctx.lineWidth = 1;
+                    ctx.shadowBlur = 0;
+                    ctx.fill();
                     ctx.stroke();
                 }
                 
-                ctx.fill();
                 ctx.restore();
             }
         }
@@ -623,18 +630,19 @@
         function getPistonY() {
             const minVol = 10;
             const maxVol = 45;
-            const minPistonY = 40;  // Piston arriba (Volumen alto)
-            const maxPistonY = 250; // Piston abajo (Volumen bajo)
+            const minPistonY = 40;  // Pistón arriba (Volumen alto)
+            const maxPistonY = 250; // Pistón abajo (Volumen bajo)
 
             const norm = (state.volume - minVol) / (maxVol - minVol);
             return maxPistonY - norm * (maxPistonY - minPistonY);
         }
 
         function syncParticleCounts() {
+            const MOL_PER_PARTICLE = 0.02; // Cada esfera dibujada en pantalla representa 0.02 moles
             const speciesList = ['N2', 'O2', 'Ar'];
             
             speciesList.forEach(type => {
-                const targetCount = state[type];
+                const targetCount = Math.round(state[type] / MOL_PER_PARTICLE);
                 const currentList = state.particles.filter(p => p.type === type);
 
                 if (currentList.length < targetCount) {
@@ -718,6 +726,7 @@
             state.particles.forEach(p => {
                 if (p.y - p.radius < pistonY) {
                     p.y = pistonY + p.radius + 2;
+                    p.vy = Math.abs(p.vy);
                 }
                 p.update(pistonY, width, height);
                 
@@ -725,14 +734,13 @@
                 p.draw(ctx, isHighlighted);
             });
 
-            animationFrameId = requestAnimationFrame(renderSim);
+            requestAnimationFrame(renderSim);
         }
 
         function updateCalculations() {
-            const MOL_FACTOR = 0.02; // 1 partícula = 0.02 moles simbólicos
-            const nN2 = state.N2 * MOL_FACTOR;
-            const nO2 = state.O2 * MOL_FACTOR;
-            const nAr = state.Ar * MOL_FACTOR;
+            const nN2 = state.N2;
+            const nO2 = state.O2;
+            const nAr = state.Ar;
             const nTotal = nN2 + nO2 + nAr;
 
             // Fracciones molares X_i
@@ -789,22 +797,22 @@
 
         function bindControls() {
             document.getElementById('slider-n2').addEventListener('input', (e) => {
-                state.N2 = parseInt(e.target.value);
-                document.getElementById('val-n2').innerText = `${state.N2} partículas`;
+                state.N2 = parseFloat(e.target.value);
+                document.getElementById('val-n2').innerText = `${state.N2.toFixed(2)} mol`;
                 syncParticleCounts();
                 updateCalculations();
             });
 
             document.getElementById('slider-o2').addEventListener('input', (e) => {
-                state.O2 = parseInt(e.target.value);
-                document.getElementById('val-o2').innerText = `${state.O2} partículas`;
+                state.O2 = parseFloat(e.target.value);
+                document.getElementById('val-o2').innerText = `${state.O2.toFixed(2)} mol`;
                 syncParticleCounts();
                 updateCalculations();
             });
 
             document.getElementById('slider-ar').addEventListener('input', (e) => {
-                state.Ar = parseInt(e.target.value);
-                document.getElementById('val-ar').innerText = `${state.Ar} partículas`;
+                state.Ar = parseFloat(e.target.value);
+                document.getElementById('val-ar').innerText = `${state.Ar.toFixed(2)} mol`;
                 syncParticleCounts();
                 updateCalculations();
             });
@@ -846,22 +854,22 @@
         }
 
         function resetLab() {
-            state.N2 = 30;
-            state.O2 = 20;
-            state.Ar = 10;
+            state.N2 = 0.60;
+            state.O2 = 0.40;
+            state.Ar = 0.20;
             state.volume = 22.4;
             state.temp = 273;
             state.activeFilter = 'all';
 
-            document.getElementById('slider-n2').value = 30;
-            document.getElementById('slider-o2').value = 20;
-            document.getElementById('slider-ar').value = 10;
+            document.getElementById('slider-n2').value = 0.60;
+            document.getElementById('slider-o2').value = 0.40;
+            document.getElementById('slider-ar').value = 0.20;
             document.getElementById('slider-vol').value = 22.4;
             document.getElementById('slider-temp').value = 273;
 
-            document.getElementById('val-n2').innerText = '30 partículas';
-            document.getElementById('val-o2').innerText = '20 partículas';
-            document.getElementById('val-ar').innerText = '10 partículas';
+            document.getElementById('val-n2').innerText = '0.60 mol';
+            document.getElementById('val-o2').innerText = '0.40 mol';
+            document.getElementById('val-ar').innerText = '0.20 mol';
             document.getElementById('val-vol').innerText = '22.4 L';
             document.getElementById('val-temp').innerText = '273 K (0°C)';
 
@@ -1256,7 +1264,7 @@
                     <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
                         <div class="flex items-center gap-2">
                             <label for="q-input-${q.id}" class="text-xs font-semibold text-slate-400">Respuesta:</label>
-                            <input type="text" id="q-input-${q.id}" placeholder="0.00" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-sm text-slate-100 font-mono w-32 focus:outline-none focus:border-indigo-500 transition-colors">
+                            <input type="text" id="q-input-${q.id}" placeholder="0.00" onkeydown="if(event.key === 'Enter') checkNewQuizQuestion(${q.id})" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-sm text-slate-100 font-mono w-32 focus:outline-none focus:border-indigo-500 transition-colors">
                             <span class="text-xs font-bold text-slate-400 font-mono">${q.unit}</span>
                         </div>
 
